@@ -5,11 +5,13 @@ __pycache__/
 
 # Virtual environment
 venv/
+yolo-env/
 .yolo-env/
 .yoloenv/
 env/
 .yenv/
 .venv/
+**/yolo-env/
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
