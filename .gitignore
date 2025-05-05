@@ -26,10 +26,5 @@ env/
 # Log files
 *.log
 
-# Output files
-outputs/
-*.mp4
-*.avi
-
 # YOLO-specific
 runs/
