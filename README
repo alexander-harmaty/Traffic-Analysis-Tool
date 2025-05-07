@@ -1,1 +1,11 @@
 # Traffic Analysis Tool
+
+## Setup virtual environment
+python -m venv yolo-env
+.\yolo-env\Scripts\activate 
+
+## Install packages
+pip install ultralytics opencv-python matplotlib openpyxl
+
+## Run
+python traffic_analysis.py --source videos/file_name.mp4

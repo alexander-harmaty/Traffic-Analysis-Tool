@@ -1,0 +1,53 @@
+{
+    "A-15.mp4": {
+      "Source": "User German Korb, via Pexels.com",
+      "Location": "A-15 Decarie Expressway",
+      "Camera Placement": "median",
+      "Camera View (DirA)": "northbound",
+      "Camera FOV": "wide",
+      "Camera Elevation": "overpass",
+      "Weather": "overcast",
+      "Other Conditions": "obstructed view by overpass"
+    },
+    "I-87 MP 013.60b SB Gov. Mario M. Cuomo Bridge View 2.mp4": {
+        "Source": "NYSDOT, via 511NY.org",
+        "Location": "I-87 / I-287 Tappan Zee Bridge",
+        "Camera Placement": "median",
+        "Camera View (DirA)": "northbound, westbound",
+        "Camera FOV": "wide",
+        "Camera Elevation": "high",
+        "Weather": "overcast",
+        "Other Conditions": "wide median"
+    },
+    "I-695 at Randall Avenue.mp4": {
+        "Source": "NYSDOT, via 511NY.org",
+        "Location": "I-695 Throgs Neck Expressway",
+        "Camera Placement": "median",
+        "Camera View (DirA)": "southbound",
+        "Camera FOV": "wide",
+        "Camera Elevation": "high",
+        "Weather": "overcast",
+        "Other Conditions": "fog"
+    },
+    "NY-25 Eastbound at New Hyde Park Road.mp4": {
+        "Source": "NYSDOT, via 511NY.org",
+        "Location": "NY-25 Jerhico Turnpike",
+        "Camera Placement": "lefthand traffic",
+        "Camera View (DirA)": "westbound",
+        "Camera FOV": "wide",
+        "Camera Elevation": "traffic light",
+        "Weather": "overcast",
+        "Other Conditions": "nighttime"
+    },
+    "908A at Westchester Avenue.mp4": {
+        "Source": "NYSDOT, via 511NY.org",
+        "Location": "NY-908a Hutchinson River Parkway",
+        "Camera Placement": "median",
+        "Camera View (DirA)": "southbound",
+        "Camera FOV": "tight",
+        "Camera Elevation": "low",
+        "Weather": "overcast",
+        "Other Conditions": "obstructed view by traffic signs"
+    }
+  }
+  
