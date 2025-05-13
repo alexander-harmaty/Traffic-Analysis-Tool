@@ -116,11 +116,11 @@ class TrafficLog:
             safe(self.congestion_density_dirA),
             safe(self.directional_flow_dirA),
             safe(self.vpm_dirA),
-            *[0 if val == 0 else safe(val) for val in self.vpml_dirA],
             safe(self.congestion_density_dirB),
             safe(self.directional_flow_dirB),
             safe(self.vpm_dirB),
-            *[0 if val == 0 else safe(val) for val in self.vpml_dirB]
+            *[safe(self.vpml_dirA[i]) if i < len(self.vpml_dirA) else "NA" for i in range(6)],
+            *[safe(self.vpml_dirB[i]) if i < len(self.vpml_dirB) else "NA" for i in range(6)]
         ]
         return row
 

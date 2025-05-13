@@ -48,6 +48,36 @@
         "Camera Elevation": "low",
         "Weather": "overcast",
         "Other Conditions": "obstructed view by traffic signs"
+    },
+    "I-87 MP 013.60b SB Gov. Mario M. Cuomo Bridge View 2 new.mp4": {
+        "Source": "NYSDOT, via 511NY.org",
+        "Location": "I-87 / I-287 Tappan Zee Bridge",
+        "Camera Placement": "median",
+        "Camera View (DirA)": "northbound, westbound",
+        "Camera FOV": "wide",
+        "Camera Elevation": "high",
+        "Weather": "cloudy",
+        "Other Conditions": "sunset"
+    },
+    "I-695 at Randall Avenue new.mp4": {
+        "Source": "NYSDOT, via 511NY.org",
+        "Location": "I-695 Throgs Neck Expressway",
+        "Camera Placement": "median",
+        "Camera View (DirA)": "southbound",
+        "Camera FOV": "wide",
+        "Camera Elevation": "high",
+        "Weather": "cloudy",
+        "Other Conditions": "sunset"
+    },
+    "I-87 MP 014.90a NB Gov. Mario M. Cuomo Bridge View 1.mp4": {
+        "Source": "NYSDOT, via 511NY.org",
+        "Location": "I-87 / I-287 Tappan Zee Bridge",
+        "Camera Placement": "median",
+        "Camera View (DirA)": "southbound, eastbound",
+        "Camera FOV": "wide",
+        "Camera Elevation": "high",
+        "Weather": "cloudy",
+        "Other Conditions": "sunset"
     }
   }
   
