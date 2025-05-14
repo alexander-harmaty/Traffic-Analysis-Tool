@@ -6,7 +6,6 @@ from typing import Optional
 
 @dataclass
 class TrafficLog:
-    # Automatically filled fields
     filename: str
     resolution: Optional[str] = "NA"
     duration: Optional[float] = 0.0
@@ -15,7 +14,6 @@ class TrafficLog:
     date_time_of_recording: Optional[str] = "NA"
     run_timestamp: str = field(default_factory=lambda: datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
-    # Filled from metadata JSON
     source: str = "MISSING"
     location: str = "MISSING"
     camera_placement: str = "MISSING"
@@ -25,7 +23,6 @@ class TrafficLog:
     weather: str = "MISSING"
     other_conditions: str = "MISSING"
 
-    # Performance Metrics
     model_used: str = "NA"
     tracking_algorithm: str = "NA"
     accuracy: Optional[float] = None
@@ -35,31 +32,47 @@ class TrafficLog:
     frame_drop_count: Optional[int] = 0
     notes: str = ""
 
-    # Vehicle counts
-    total_vehicle_count: int = 0
-    car_count: int = 0
-    truck_count: int = 0
-    bus_count: int = 0
-    motorcycle_count: int = 0
+    congestion_density_total: Optional[float] = None
+    vpm_total: Optional[float] = None
+    total_vehicle_count: Optional[int] = None
+    car_count: Optional[int] = None
+    truck_count: Optional[int] = None
+    bus_count: Optional[int] = None
+    motorcycle_count: Optional[int] = None
 
-    # Speed
+    congestion_density_dirA: Optional[float] = None
+    vpm_dirA: Optional[float] = None
+    dirA_vehicle_count: Optional[int] = None
+    dirA_car_count: Optional[int] = None
+    dirA_truck_count: Optional[int] = None
+    dirA_bus_count: Optional[int] = None
+    dirA_motorcycle_count: Optional[int] = None
+
+    congestion_density_dirB: Optional[float] = None
+    vpm_dirB: Optional[float] = None
+    dirB_vehicle_count: Optional[int] = None
+    dirB_car_count: Optional[int] = None
+    dirB_truck_count: Optional[int] = None
+    dirB_bus_count: Optional[int] = None
+    dirB_motorcycle_count: Optional[int] = None
+
     overall_avg_speed: Optional[float] = None
     avg_car_speed: Optional[float] = None
     avg_truck_speed: Optional[float] = None
     avg_bus_speed: Optional[float] = None
     avg_motorcycle_speed: Optional[float] = None
 
-    # Direction A
-    congestion_density_dirA: Optional[float] = None
-    directional_flow_dirA: int = 0
-    vpm_dirA: Optional[float] = None
-    vpml_dirA: list = field(default_factory=lambda: ["NA"] * 6)
+    avg_speed_dirA: Optional[float] = None
+    avg_car_speed_dirA: Optional[float] = None
+    avg_truck_speed_dirA: Optional[float] = None
+    avg_bus_speed_dirA: Optional[float] = None
+    avg_motorcycle_speed_dirA: Optional[float] = None
 
-    # Direction B
-    congestion_density_dirB: Optional[float] = None
-    directional_flow_dirB: int = 0
-    vpm_dirB: Optional[float] = None
-    vpml_dirB: list = field(default_factory=lambda: ["NA"] * 6)
+    avg_speed_dirB: Optional[float] = None
+    avg_car_speed_dirB: Optional[float] = None
+    avg_truck_speed_dirB: Optional[float] = None
+    avg_bus_speed_dirB: Optional[float] = None
+    avg_motorcycle_speed_dirB: Optional[float] = None
 
     def update_from_metadata(self, metadata_dict):
         video_meta = metadata_dict.get(self.filename, {})
@@ -75,75 +88,38 @@ class TrafficLog:
 
     def to_excel_row(self):
         def safe(val):
-            if isinstance(val, (int, float)) and val == 0:
-                return 0
-            return "NA" if val in [None, "", []] else val
+            return "NA" if val is None else val
 
-        row = [
-            safe(self.filename),
-            safe(self.resolution),
-            safe(self.duration),
-            safe(self.fps),
-            safe(self.total_frames),
-            safe(self.date_time_of_recording),
-            safe(self.source),
-            safe(self.location),
-            safe(self.camera_placement),
-            safe(self.camera_view_dirA),
-            safe(self.camera_fov),
-            safe(self.camera_elevation),
-            safe(self.weather),
-            safe(self.other_conditions),
-            safe(self.run_timestamp),
-            safe(self.model_used),
-            safe(self.tracking_algorithm),
-            safe(self.accuracy),
-            safe(self.inference_time_per_frame_ms),
-            safe(self.false_positive_timestamps),
-            safe(self.average_fps),
-            safe(self.frame_drop_count),
-            safe(self.notes),
-            safe(self.total_vehicle_count),
-            safe(self.car_count),
-            safe(self.truck_count),
-            safe(self.bus_count),
-            safe(self.motorcycle_count),
-            safe(self.overall_avg_speed),
-            safe(self.avg_car_speed),
-            safe(self.avg_truck_speed),
-            safe(self.avg_bus_speed),
-            safe(self.avg_motorcycle_speed),
-            safe(self.congestion_density_dirA),
-            safe(self.directional_flow_dirA),
-            safe(self.vpm_dirA),
-            safe(self.congestion_density_dirB),
-            safe(self.directional_flow_dirB),
-            safe(self.vpm_dirB),
-            *[safe(self.vpml_dirA[i]) if i < len(self.vpml_dirA) else "NA" for i in range(6)],
-            *[safe(self.vpml_dirB[i]) if i < len(self.vpml_dirB) else "NA" for i in range(6)]
+        return [
+            safe(self.filename), safe(self.resolution), safe(self.duration), safe(self.fps), safe(self.total_frames),
+            safe(self.date_time_of_recording), safe(self.source), safe(self.location), safe(self.camera_placement),
+            safe(self.camera_view_dirA), safe(self.camera_fov), safe(self.camera_elevation), safe(self.weather),
+            safe(self.other_conditions), safe(self.run_timestamp), safe(self.model_used), safe(self.tracking_algorithm),
+            safe(self.accuracy), safe(self.inference_time_per_frame_ms), safe(self.false_positive_timestamps),
+            safe(self.average_fps), safe(self.frame_drop_count), safe(self.notes),
+            safe(self.congestion_density_total), safe(self.vpm_total),
+            safe(self.total_vehicle_count), safe(self.car_count), safe(self.truck_count), safe(self.bus_count), safe(self.motorcycle_count),
+            safe(self.congestion_density_dirA), safe(self.vpm_dirA), safe(self.dirA_vehicle_count), safe(self.dirA_car_count),
+            safe(self.dirA_truck_count), safe(self.dirA_bus_count), safe(self.dirA_motorcycle_count),
+            safe(self.congestion_density_dirB), safe(self.vpm_dirB), safe(self.dirB_vehicle_count), safe(self.dirB_car_count),
+            safe(self.dirB_truck_count), safe(self.dirB_bus_count), safe(self.dirB_motorcycle_count),
+            safe(self.overall_avg_speed), safe(self.avg_car_speed), safe(self.avg_truck_speed), safe(self.avg_bus_speed), safe(self.avg_motorcycle_speed),
+            safe(self.avg_speed_dirA), safe(self.avg_car_speed_dirA), safe(self.avg_truck_speed_dirA), safe(self.avg_bus_speed_dirA), safe(self.avg_motorcycle_speed_dirA),
+            safe(self.avg_speed_dirB), safe(self.avg_car_speed_dirB), safe(self.avg_truck_speed_dirB), safe(self.avg_bus_speed_dirB), safe(self.avg_motorcycle_speed_dirB)
         ]
-        return row
 
 def load_video_metadata(json_path):
     with open(json_path, "r") as file:
         return json.load(file)
 
-import openpyxl
 from openpyxl.styles import Alignment
 
 def append_log_to_excel(log: TrafficLog, excel_path: str):
     wb = openpyxl.load_workbook(excel_path)
     ws = wb.active
-
-    # Append row
-    new_row = log.to_excel_row()
-    ws.append(new_row)
-
-    # Get the index of the newly added row
+    row = log.to_excel_row()
+    ws.append(row)
     row_idx = ws.max_row
-
-    # Apply center alignment to all cells in the new row
     for cell in ws[row_idx]:
         cell.alignment = Alignment(horizontal="center", vertical="center")
-
     wb.save(excel_path)
