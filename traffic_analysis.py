@@ -70,6 +70,8 @@ def main():
     count_a = 0
     count_b = 0
     previous_centroids = defaultdict(lambda: None)
+    class_counts_a = defaultdict(int)
+    class_counts_b = defaultdict(int)
 
     while True:
         ret, frame = cap.read()
@@ -80,33 +82,37 @@ def main():
         detections = results[0].boxes
 
         vehicle_boxes = []
+        box_classes = []
         if detections is not None and detections.cls is not None:
             for box, cls_id in zip(detections.xyxy, detections.cls):
                 class_name = class_names[int(cls_id)]
                 if class_name in VEHICLE_CLASSES:
                     x1, y1, x2, y2 = map(int, box[:4])
                     vehicle_boxes.append([x1, y1, x2, y2])
+                    box_classes.append(class_name)
 
         vehicle_boxes_np = np.array(vehicle_boxes)
         tracks = tracker.update(vehicle_boxes_np)
 
-        for track in tracks:
+        for i, track in enumerate(tracks):
             x1, y1, x2, y2, track_id = track.astype(int)
             centroid = ((x1 + x2) // 2, y2)
-
             prev = previous_centroids[track_id]
             previous_centroids[track_id] = centroid
-
             if prev is None:
                 continue
 
             dy = centroid[1] - prev[1]
-            if dy > 0:  # moving down (away from camera)
+            class_name = box_classes[i] if i < len(box_classes) else "unknown"
+
+            if dy > 0:
                 if line_counter_a.check_crossing(track_id, centroid):
                     count_a += 1
-            elif dy < 0:  # moving up (toward camera)
+                    class_counts_a[class_name] += 1
+            elif dy < 0:
                 if line_counter_b.check_crossing(track_id, centroid):
                     count_b += 1
+                    class_counts_b[class_name] += 1
 
         # Annotate frame
         annotated_frame = results[0].plot()
@@ -142,6 +148,11 @@ def main():
     log.tracking_algorithm = "SORT + Line Crossing"
     log.directional_flow_dirA = int(count_a)
     log.directional_flow_dirB = int(count_b)
+
+    log.car_count = class_counts_a['car'] + class_counts_b['car']
+    log.truck_count = class_counts_a['truck'] + class_counts_b['truck']
+    log.bus_count = class_counts_a['bus'] + class_counts_b['bus']
+    log.motorcycle_count = class_counts_a['motorcycle'] + class_counts_b['motorcycle']
 
     append_log_to_excel(log, "Traffic_Analysis_Log.xlsx")
     print(f"Log for {filename} appended to Traffic_Analysis_Log.xlsx")
