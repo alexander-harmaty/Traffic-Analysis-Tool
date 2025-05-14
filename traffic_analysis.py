@@ -241,25 +241,21 @@ def main():
         log.avg_speed_dirB = round(sum(speeds_b) / len(speeds_b), 2)
 
     # Speed by class
-    log.avg_car_speed_dirA = round(sum(class_speeds_a['car']) / len(class_speeds_a['car']), 2) if class_speeds_a['car'] else None
-    log.avg_truck_speed_dirA = round(sum(class_speeds_a['truck']) / len(class_speeds_a['truck']), 2) if class_speeds_a['truck'] else None
-    log.avg_bus_speed_dirA = round(sum(class_speeds_a['bus']) / len(class_speeds_a['bus']), 2) if class_speeds_a['bus'] else None
-    log.avg_motorcycle_speed_dirA = round(sum(class_speeds_a['motorcycle']) / len(class_speeds_a['motorcycle']), 2) if class_speeds_a['motorcycle'] else None
+    log.avg_car_speed_dirA = round(sum(class_speeds_a['car']) / len(class_speeds_a['car']), 2) if class_speeds_a['car'] else 0
+    log.avg_truck_speed_dirA = round(sum(class_speeds_a['truck']) / len(class_speeds_a['truck']), 2) if class_speeds_a['truck'] else 0
+    log.avg_bus_speed_dirA = round(sum(class_speeds_a['bus']) / len(class_speeds_a['bus']), 2) if class_speeds_a['bus'] else 0
+    log.avg_motorcycle_speed_dirA = round(sum(class_speeds_a['motorcycle']) / len(class_speeds_a['motorcycle']), 2) if class_speeds_a['motorcycle'] else 0
 
-    log.avg_car_speed_dirB = round(sum(class_speeds_b['car']) / len(class_speeds_b['car']), 2) if class_speeds_b['car'] else None
-    log.avg_truck_speed_dirB = round(sum(class_speeds_b['truck']) / len(class_speeds_b['truck']), 2) if class_speeds_b['truck'] else None
-    log.avg_bus_speed_dirB = round(sum(class_speeds_b['bus']) / len(class_speeds_b['bus']), 2) if class_speeds_b['bus'] else None
-    log.avg_motorcycle_speed_dirB = round(sum(class_speeds_b['motorcycle']) / len(class_speeds_b['motorcycle']), 2) if class_speeds_b['motorcycle'] else None
+    log.avg_car_speed_dirB = round(sum(class_speeds_b['car']) / len(class_speeds_b['car']), 2) if class_speeds_b['car'] else 0
+    log.avg_truck_speed_dirB = round(sum(class_speeds_b['truck']) / len(class_speeds_b['truck']), 2) if class_speeds_b['truck'] else 0
+    log.avg_bus_speed_dirB = round(sum(class_speeds_b['bus']) / len(class_speeds_b['bus']), 2) if class_speeds_b['bus'] else 0
+    log.avg_motorcycle_speed_dirB = round(sum(class_speeds_b['motorcycle']) / len(class_speeds_b['motorcycle']), 2) if class_speeds_b['motorcycle'] else 0
 
     # Combined class averages
-    if log.avg_car_speed_dirA is not None and log.avg_car_speed_dirB is not None:
-        log.avg_car_speed = round((log.avg_car_speed_dirA + log.avg_car_speed_dirB) / 2, 2)
-    if log.avg_truck_speed_dirA is not None and log.avg_truck_speed_dirB is not None:
-        log.avg_truck_speed = round((log.avg_truck_speed_dirA + log.avg_truck_speed_dirB) / 2, 2)
-    if log.avg_bus_speed_dirA is not None and log.avg_bus_speed_dirB is not None:
-        log.avg_bus_speed = round((log.avg_bus_speed_dirA + log.avg_bus_speed_dirB) / 2, 2)
-    if log.avg_motorcycle_speed_dirA is not None and log.avg_motorcycle_speed_dirB is not None:
-        log.avg_motorcycle_speed = round((log.avg_motorcycle_speed_dirA + log.avg_motorcycle_speed_dirB) / 2, 2)
+    log.avg_car_speed = round((log.avg_car_speed_dirA + log.avg_car_speed_dirB) / 2, 2)
+    log.avg_truck_speed = round((log.avg_truck_speed_dirA + log.avg_truck_speed_dirB) / 2, 2)
+    log.avg_bus_speed = round((log.avg_bus_speed_dirA + log.avg_bus_speed_dirB) / 2, 2)
+    log.avg_motorcycle_speed = round((log.avg_motorcycle_speed_dirA + log.avg_motorcycle_speed_dirB) / 2, 2)
 
     log.model_used = "yolov5s.pt"
     log.tracking_algorithm = "SORT + Line Crossing"
