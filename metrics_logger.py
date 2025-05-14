@@ -25,9 +25,7 @@ class TrafficLog:
 
     model_used: str = "NA"
     tracking_algorithm: str = "NA"
-    accuracy: Optional[float] = None
     inference_time_per_frame_ms: Optional[float] = None
-    false_positive_timestamps: str = ""
     average_fps: Optional[float] = None
     frame_drop_count: Optional[int] = 0
     notes: str = ""
@@ -95,8 +93,7 @@ class TrafficLog:
             safe(self.date_time_of_recording), safe(self.source), safe(self.location), safe(self.camera_placement),
             safe(self.camera_view_dirA), safe(self.camera_fov), safe(self.camera_elevation), safe(self.weather),
             safe(self.other_conditions), safe(self.run_timestamp), safe(self.model_used), safe(self.tracking_algorithm),
-            safe(self.accuracy), safe(self.inference_time_per_frame_ms), safe(self.false_positive_timestamps),
-            safe(self.average_fps), safe(self.frame_drop_count), safe(self.notes),
+            safe(self.inference_time_per_frame_ms), safe(self.average_fps), safe(self.frame_drop_count), safe(self.notes),
             safe(self.congestion_density_total), safe(self.vpm_total),
             safe(self.total_vehicle_count), safe(self.car_count), safe(self.truck_count), safe(self.bus_count), safe(self.motorcycle_count),
             safe(self.congestion_density_dirA), safe(self.vpm_dirA), safe(self.dirA_vehicle_count), safe(self.dirA_car_count),

@@ -112,6 +112,8 @@ def main():
     class_speeds_b = defaultdict(list)
 
     frame_index = 0
+    inference_times = []
+    read_frames = 0
 
     cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
@@ -120,7 +122,12 @@ def main():
         if not ret:
             break
 
+        read_frames += 1
+        start_time = time.time()
         results = model.predict(frame, imgsz=640, conf=0.4, device=0)
+        end_time = time.time()
+        inference_times.append((end_time - start_time) * 1000)  # ms
+
         detections = results[0].boxes
 
         vehicle_boxes = []
@@ -203,6 +210,10 @@ def main():
     cap.release()
     cv2.destroyAllWindows()
 
+    log.inference_time_per_frame_ms = round(sum(inference_times) / len(inference_times), 2) if inference_times else None
+    log.average_fps = round(read_frames / duration, 2) if duration else None
+    log.frame_drop_count = frame_count - read_frames
+
     log.total_vehicle_count = total
     log.dirA_vehicle_count = int(count_a)
     log.dirB_vehicle_count = int(count_b)
@@ -240,7 +251,6 @@ def main():
     if speeds_b:
         log.avg_speed_dirB = round(sum(speeds_b) / len(speeds_b), 2)
 
-    # Speed by class
     log.avg_car_speed_dirA = round(sum(class_speeds_a['car']) / len(class_speeds_a['car']), 2) if class_speeds_a['car'] else 0
     log.avg_truck_speed_dirA = round(sum(class_speeds_a['truck']) / len(class_speeds_a['truck']), 2) if class_speeds_a['truck'] else 0
     log.avg_bus_speed_dirA = round(sum(class_speeds_a['bus']) / len(class_speeds_a['bus']), 2) if class_speeds_a['bus'] else 0
@@ -251,7 +261,6 @@ def main():
     log.avg_bus_speed_dirB = round(sum(class_speeds_b['bus']) / len(class_speeds_b['bus']), 2) if class_speeds_b['bus'] else 0
     log.avg_motorcycle_speed_dirB = round(sum(class_speeds_b['motorcycle']) / len(class_speeds_b['motorcycle']), 2) if class_speeds_b['motorcycle'] else 0
 
-    # Combined class averages
     log.avg_car_speed = round((log.avg_car_speed_dirA + log.avg_car_speed_dirB) / 2, 2)
     log.avg_truck_speed = round((log.avg_truck_speed_dirA + log.avg_truck_speed_dirB) / 2, 2)
     log.avg_bus_speed = round((log.avg_bus_speed_dirA + log.avg_bus_speed_dirB) / 2, 2)
